@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+
+    <session-factory>
+        <!-- 数据源配置-->
+        <property name="connection.username">root</property>
+        <property name="connection.password">123456</property>
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/hibernate?useUnicode=true&amp;characterEncoding=UTF-8</property>
+
+
+
+        <!--        方言-->
+<!--        <property name="dialect">org.hibernate.dialect.MySQL57Dialect</property>-->
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <!--        打印SQL语句  -->
+        <property name="show_sql">true</property>
+        <!--        格式化SQL-->
+        <property name="format_sql">true</property>
+        <!--        是否自动生成数据表-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!--
+         有几个可选择的值
+         update：动态创建表，如果表存在，则直接使用，如果表不存在，则创建
+         create：无论表是否存在，都会重新创建
+         create-drop： 初始化创建表，程序结束时删除表
+         validate：校验实体关系映射文件和数据表是否对应，不能对应直接报错
+
+
+
+        -->
+
+        <!--        注册实体关系类，不需要应黑色问及那了-->
+
+        <mapping class="com.yaoge.pojo.Customer"></mapping>
+
+    </session-factory>
+
+
+</hibernate-configuration>
