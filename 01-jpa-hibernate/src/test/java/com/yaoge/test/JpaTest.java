@@ -122,7 +122,7 @@ public class JpaTest {
 
     }
     /**
-     * 删除  注意，不能删除一个游离状态的对象
+     * 删除  注意，不能删除一个游离状态的对象 JPA 不能删除游离态的数据，但是hibernate可以
      * 想要通过remove 就必须 先查再删除
      * 4种状态
      *
@@ -141,7 +141,8 @@ public class JpaTest {
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
 
-        Customer customer= em.find(Customer.class,3L);
+        Customer customer= new Customer();
+        customer.setCustId(11L);
 
         em.remove(customer);
 

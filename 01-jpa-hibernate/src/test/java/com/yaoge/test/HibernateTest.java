@@ -7,6 +7,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,11 +28,14 @@ public class HibernateTest {
 
     @Before
     public void init(){
-        //就是获取sessionFactory的方式和原生 hibernate 不一致，这是提供的JPA规范
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        //2.格局服务注册创建一个元数据资源集，同时构建元数据并生成应用一般唯一的session工厂
-        SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-         session = sessionFactory.openSession();
+//        //就是获取sessionFactory的方式和原生 hibernate 不一致，这是提供的JPA规范
+//        StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+//        //2.格局服务注册创建一个元数据资源集，同时构建元数据并生成应用一般唯一的session工厂
+//        SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        Configuration configure = new Configuration().configure();
+        SessionFactory sessionFactory = configure.buildSessionFactory();//只是两种不同的获取SessionFactory的方式
+
+        session = sessionFactory.openSession();
         transaction= session.beginTransaction();
     }
 
@@ -62,7 +66,7 @@ public class HibernateTest {
          * find
          * load 延时加载，用的时候才会发送SQL语句
          */
-        Customer customer = session.load(Customer.class, 1L);
+        Customer customer = session.load(Customer.class, 8L);
         System.out.println("===============");
         System.out.println(customer);
 
