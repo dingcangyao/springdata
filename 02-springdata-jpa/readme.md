@@ -9,4 +9,6 @@
 3. Query By Example  
    只能支持字符串查询，不支持嵌套的方式查询
 4. 通过Specifications
+   
 5. 通过 Querydsl
+   1. 通用查询框架
