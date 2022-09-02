@@ -9,41 +9,44 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>01-jpa-hibernate</artifactId>
+    <artifactId>03-mybatis</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
     <dependencies>
-        <!-- 测试依赖 -->
+        <!-- Mybatis核心 -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.7</version>
+        </dependency>
+        <!-- junit测试 -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>4.12</version>
             <scope>test</scope>
         </dependency>
-        <!-- hibernate 对JPA的支持 -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.4.32.Final</version>
-        </dependency>
-        <!--
-        mysql 和 mariaDB 的jdbc实现
-        就是Mysql的依赖
-        -->
+        <!-- MySQL驱动 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.47</version>
+            <version>5.1.3</version>
         </dependency>
-
+        <!-- 分页插件的依赖 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>5.2.0</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
+            <version>RELEASE</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

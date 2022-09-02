@@ -7,23 +7,27 @@
      http://www.springframework.org/schema/data/jpa
      https://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- 用于整合JPA -->
+    <!-- 用于整合JPA  base-package 持久操作层的包名 -->
     <jpa:repositories base-package="com.yaoge.repository"
-                      entity-manager-factory-ref="entityManagerFactory"
-    transaction-manager-ref="transactionManager"/>
 
+                      entity-manager-factory-ref="entityManagerFactory"
+
+    transaction-manager-ref="transactionManager"/>  <!--  指定EntityManagerFactory-->   <!--  指定事务管理器-->
+
+    <!--  创建 entityManagerFactory-->
     <bean name="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="jpaVendorAdapter" >
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <!--生成数据库-->
+                <!--是否生成数据库-->
                 <property name="generateDdl" value="true"></property>
-                <!-- 显示sql语句-->
+                <!-- 是否显示sql语句-->
                 <property name="showSql" value="true"></property>
             </bean>
         </property>
-        <!--实体扫描的包-->
+        <!--指定实体扫描的包  实体映射关系-->
         <property name="packagesToScan" value="com.yaoge.entity"></property>
 
+        <!-- 指定数据源 -->
         <property name="dataSource" ref="datasource"></property>
 
     </bean>
@@ -38,8 +42,10 @@
 <!--    声明式事务-->
 
     <bean name="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <!-- 指定EntityManagerFactory -->
         <property name="entityManagerFactory" ref="entityManagerFactory" ></property>
     </bean>
+    <!-- 开启事务注解 -->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

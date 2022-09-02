@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yaoge.dao.PeopleMapper">
+    <!--
+    namespace 的值 是mapper 的全类名 用来绑定mapper类
+
+
+    mybatis的映射文件其实主要就是和dao层的方法来代理
+    这就是和 hibernate 的区别。
+    hibernate 着重于映射 java bean 和数据库表的关系
+    而 mybatis 专注于 映射 对数据库的操作，对于java bean的映射只是为了协助 参数和结果的存放而已，
+    可有可无
+
+    语句操作主要有：select update delete insert
+
+    里面的属性id 就是对应的mapper类的方法名  用来绑定mapper 的操作方法
+    ;-->
+    <insert id="insertUser">
+        insert into people values(null,'hello',12312)
+    </insert>
+
+    <select id="findPeoples" resultType="people">
+        select * from people
+    </select>
+</mapper>

@@ -20,6 +20,7 @@
 
     <dependencies>
 
+        <!-- springJpa 的依赖 -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
@@ -32,6 +33,7 @@
         </dependency>
 
 
+        <!-- hibernate 的jpa依赖-->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
@@ -48,6 +50,7 @@
             <artifactId>spring-test</artifactId>
             <version>5.2.6.RELEASE</version>
         </dependency>
+        <!-- 也是Hibernate的jpa依赖 -->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>javax.persistence-api</artifactId>

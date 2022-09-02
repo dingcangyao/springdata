@@ -24,7 +24,7 @@ public class JpaTest {
     @Before
     public void init(){
 
-        //会去读取  MRTA-INF下面的persistence.xml中对应名称的持久化单元来构建 EntityManangerFactory
+        //会去读取 默认  MRTA-INF下面的persistence.xml中对应名称的持久化单元来构建 EntityManangerFactory
         factory=Persistence.createEntityManagerFactory("hibernateJPA");
 
         em=factory.createEntityManager();
@@ -56,7 +56,7 @@ public class JpaTest {
         transaction.begin();
 
 //        Customer customer = em.find(Customer.class, 1L);//立即查询
-        Customer customer = em.getReference(Customer.class, 1L);//延迟查询，在用到customer对象的时候，才去查询
+        Customer customer = em.getReference(Customer.class, 8L);//延迟查询，在用到customer对象的时候，才去查询
         System.out.println("++++++++++");
         System.out.println(customer);
 

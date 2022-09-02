@@ -11,6 +11,9 @@
     <modules>
         <module>01-jpa-hibernate</module>
         <module>02-springdata-jpa</module>
+        <module>03-spring-mybatis</module>
+        <module>03-mybatis</module>
+        <module>06-hibernate-test</module>
     </modules>
     <!--一般用来管理项目的父项目，所有可以不用有代码-->
     <properties>

@@ -9,9 +9,9 @@ import javax.persistence.*;
  * create by yaoge
  * 2022/8/23 17:48
  */
-@Entity
-@Table(name = "cst_customer")
-@DynamicUpdate(value = true)
+@Entity //指定这是一个实体
+@Table(name = "cst_customer")//对应的表名
+@DynamicUpdate(value = true)//动态更新
 @DynamicInsert
 public class Customer {
 
@@ -28,9 +28,9 @@ public class Customer {
      *
      *     @Column(name = "cust_id") 数据库中表字段的名称
      */
-    @Id
+    @Id //表明是OID
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cust_id")
+    @Column(name = "cust_id") //和列名映射
     private Long custId;//客户的主键
 
     @Column(name = "cust_name")
