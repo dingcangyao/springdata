@@ -40,6 +40,12 @@ public class PrimaryDataSourceConfig {
 
         return dataSourceProperties.initializeDataSourceBuilder().build();
     }
+
+    /**
+     * 创建 jdbcTemplate对象，使用jdbcTemplate的时候才用到
+     * @param dataSource
+     * @return
+     */
     @Primary
     @Bean(name = "primaryJdbcTemplate")
     public JdbcTemplate jdbcTemplate(@Qualifier("primaryDataSource") DataSource dataSource){

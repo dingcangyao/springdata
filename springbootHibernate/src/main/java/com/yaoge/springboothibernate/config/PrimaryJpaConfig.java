@@ -23,7 +23,8 @@ import javax.sql.DataSource;
  * 2022/9/1 18:34
  */
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement//开启事务管理器配置
+//下面是整合 JPA和Spring
 @EnableJpaRepositories(
         basePackages = PrimaryJpaConfig.REPOSITORY_PACKAGE,
         entityManagerFactoryRef = "primaryEntityManagerFactory",

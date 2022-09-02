@@ -1,0 +1,93 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/aop
+         https://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/context
+         https://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/tx
+         https://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--加载 druid.properties 文件 -->
+    <context:property-placeholder location="classpath:druid.properties"/>
+
+    <!-- 主数据源的配置 -->
+    <!-- 数据源 DataSource 的创建 -->
+    <bean id="primaryDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${primary.druid.driver}"/>
+        <property name="url" value="${primary.druid.url}"/>
+        <property name="username" value="${primary.druid.username}"/>
+        <property name="password" value="${primary.druid.password}"/>
+
+
+        <property name="initialSize" value="${primary.druid.pool.init}"/>
+        <property name="minIdle" value="${primary.druid.pool.minIdle}"/>
+        <property name="maxActive" value="${primary.druid.pool.maxActive}"/>
+        <property name="maxWait" value="${primary.druid.pool.maxWait}"/>
+    </bean>
+
+    <bean id="primarySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 配置数据源-->
+        <property name="dataSource" ref="primaryDataSource"/>
+        <!-- 配置Mapper 文件路径-->
+        <property name="mapperLocations" value="classpath:mappers/primary/*Mapper.xml"/>
+        <!-- 配置需要定义别名的实体类的包-->
+        <property name="typeAliasesPackage" value="com.yaoge.pojo"/>
+        <!-- 配置Mybatis的配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <!-- 加载dao 包中所有的接口，通过sqlSessionFactory 获取sqlSession对象，然后创建所有的dao接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="primarySqlSessionFactory"/>
+        <property name="basePackage" value="com.yaoge.dao.primary"/>
+    </bean>
+    <bean id="transctionmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="primaryDataSource"></property>
+    </bean>
+
+
+    <!-- 次数据源的配置 -->
+    <!-- 数据源 DataSource 的创建 -->
+    <bean id="secondaryDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${secondary.druid.driver}"/>
+        <property name="url" value="${secondary.druid.url}"/>
+        <property name="username" value="${secondary.druid.username}"/>
+        <property name="password" value="${secondary.druid.password}"/>
+
+
+        <property name="initialSize" value="${secondary.druid.pool.init}"/>
+        <property name="minIdle" value="${secondary.druid.pool.minIdle}"/>
+        <property name="maxActive" value="${secondary.druid.pool.maxActive}"/>
+        <property name="maxWait" value="${secondary.druid.pool.maxWait}"/>
+    </bean>
+
+    <bean id="secondarySqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 配置数据源-->
+        <property name="dataSource" ref="secondaryDataSource"/>
+        <!-- 配置Mapper 文件路径-->
+        <property name="mapperLocations" value="classpath:mappers/secondary/*Mapper.xml"/>
+        <!-- 配置需要定义别名的实体类的包-->
+        <property name="typeAliasesPackage" value="com.yaoge.pojo"/>
+        <!-- 配置Mybatis的配置文件-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+
+    <!-- 加载dao 包中所有的接口，通过sqlSessionFactory 获取sqlSession对象，然后创建所有的dao接口 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="secondarySqlSessionFactory"/>
+        <property name="basePackage" value="com.yaoge.dao.secondary"/>
+    </bean>
+    <bean id="secondaryTransctionmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="secondaryDataSource"></property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transctionmanager" ></tx:annotation-driven>
+    <tx:annotation-driven transaction-manager="secondaryTransctionmanager" ></tx:annotation-driven>
+
+
+</beans>
