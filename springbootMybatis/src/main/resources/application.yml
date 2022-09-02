@@ -9,5 +9,5 @@ spring:
       password: 123456 # 此处修改为用户对应的密码
 mybatis:
   mapper-locations: classpath:mappers/*Mapper.xml  #指定mapper 文件的位置
-  type-aliases-package: com.yaoge.springbootMybatis.pojo #为实体类 所在的包 指定别名
+  type-aliases-package: com.yaoge.springbootMybatis.pojo  #为实体类 所在的包 指定别名
 #  config-location:  # 可以用来指定 mybatis全局配置文件
