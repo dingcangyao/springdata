@@ -29,6 +29,10 @@ import java.util.Map;
 @EnableTransactionManagement(proxyTargetClass = true)
 public class DynamicConfiguration {
 
+    /**
+     * 创建数据源A
+     * @return
+     */
     @Bean(name = "dataSourceA")
     public DataSource dataSourceA(){
 
@@ -40,6 +44,11 @@ public class DynamicConfiguration {
 
         return druidDataSource;
     }
+
+    /**
+     * 创建数据源B
+     * @return
+     */
     @Bean(name = "dataSourceB")
     public DataSource dataSourceB(){
 
@@ -51,30 +60,53 @@ public class DynamicConfiguration {
 
         return druidDataSource;
     }
+
+    /**
+     * 创建动态数据源
+     * @param dataSourceA
+     * @param dataSourceB
+     * @return
+     */
     @Bean(name = "dataSource")
     public DataSource dataSource(@Qualifier("dataSourceA") DataSource dataSourceA, @Qualifier("dataSourceB") DataSource dataSourceB){
 
 
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
-        dynamicDataSource.setDefaultTargetDataSource(dataSourceA);
+        dynamicDataSource.setDefaultTargetDataSource(dataSourceA);//指定默认数据源
         Map map = new HashMap<>();
 
         map.put(DBTypeEnum.ADB,dataSourceA);
         map.put(DBTypeEnum.BDB,dataSourceB);
-        dynamicDataSource.setTargetDataSources(map);
+        dynamicDataSource.setTargetDataSources(map);//放入 数据源映射，到时候，就会根据  里面我们重写的方法返回的值作为key找到对应的value作为datasource
 
         return dynamicDataSource;
     }
+
+    /**
+     * 创建对应的sqlSessionFactory
+     * @param dataSource
+     * @param applicationContext
+     * @return
+     * @throws Exception
+     */
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean(@Qualifier("dataSource") DataSource dataSource, ApplicationContext applicationContext) throws Exception {
 
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(dataSource);
-        sqlSessionFactory.setTypeAliasesPackage("com.yaoge.bootmybatismultidatasource.pojo");
-        sqlSessionFactory.setMapperLocations(applicationContext.getResources("classpath:mappers/*Mapper.xml"));
+        sqlSessionFactory.setDataSource(dataSource);//设置动态数据源
+        sqlSessionFactory.setTypeAliasesPackage("com.yaoge.bootmybatismultidatasource.pojo");//指定别名包
+        sqlSessionFactory.setMapperLocations(applicationContext.getResources("classpath:mappers/*Mapper.xml"));//指定mapper文件所在位置
+
         return sqlSessionFactory.getObject();
 
     }
+
+    /**
+     * 创建事务管理器
+     *
+     * @param dataSource
+     * @return
+     */
     @Bean(name = "transactionManager")
     public TransactionManager transactionManager(@Qualifier("dataSource") DataSource dataSource){
 

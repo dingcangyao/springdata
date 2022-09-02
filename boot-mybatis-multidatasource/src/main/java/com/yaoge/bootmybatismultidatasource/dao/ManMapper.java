@@ -13,7 +13,7 @@ import java.util.List;
 @Repository
 public interface ManMapper {
 
-    @Datasource(type = DBTypeEnum.BDB)
+    @Datasource(type = DBTypeEnum.BDB)//指定数据源
     public List<Man> selectPeoples();
 
     public int insertPeople();

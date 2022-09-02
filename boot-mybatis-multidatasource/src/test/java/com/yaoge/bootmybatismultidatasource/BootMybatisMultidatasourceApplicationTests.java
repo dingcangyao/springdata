@@ -15,10 +15,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-@MapperScan("com.yaoge.bootmybatismultidatasource.dao")
+@MapperScan("com.yaoge.bootmybatismultidatasource.dao")//指定mapper类所在报名
 @SpringBootTest
 class BootMybatisMultidatasourceApplicationTests {
 
+
+    /**
+     * 注入Mapper类
+     */
     @Autowired
     private PeopleMapper peopleMapper;
     @Autowired
@@ -27,14 +31,13 @@ class BootMybatisMultidatasourceApplicationTests {
     private ManMapper manMapper;
 
     @Test
-    @Datasource(type = DBTypeEnum.ADB)
     void contextLoads() {
 
         List<People> people = peopleMapper.selectPeoples();
         people.forEach(System.out::println);
     }
 
-    @Datasource(type = DBTypeEnum.ADB)
+
     @Test
     public void testDdynamic(){
 

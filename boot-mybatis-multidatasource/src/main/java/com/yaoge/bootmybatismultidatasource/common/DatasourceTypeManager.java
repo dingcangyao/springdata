@@ -5,6 +5,7 @@ package com.yaoge.bootmybatismultidatasource.common;
  * 2022/9/2 15:13
  */
 public class DatasourceTypeManager {
+    //存放当前数据源是哪一个
     private final static ThreadLocal<DBTypeEnum> DB_HOLDER=new ThreadLocal<>();
 
     public static DBTypeEnum getDatasource(){
@@ -16,7 +17,7 @@ public class DatasourceTypeManager {
     }
 
     public static void resetDatasource(){
-        DB_HOLDER.set(DBTypeEnum.MASTER);
+        DB_HOLDER.set(DBTypeEnum.ADB);
     }
 
 

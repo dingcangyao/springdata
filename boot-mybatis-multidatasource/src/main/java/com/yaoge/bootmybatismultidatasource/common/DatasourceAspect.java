@@ -9,6 +9,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
@@ -20,8 +21,8 @@ import java.lang.reflect.Method;
 @Component
 public class DatasourceAspect {
 
-    @Pointcut("@annotation(com.yaoge.bootmybatismultidatasource.common.Datasource)" +
-            "|| @within(com.yaoge.bootmybatismultidatasource.common.Datasource)")
+    @Pointcut("@annotation(com.yaoge.bootmybatismultidatasource.common.Datasource)" +//这个是方法上注解
+            "|| @within(com.yaoge.bootmybatismultidatasource.common.Datasource)")//这个是类上注解
     public void pointcut(){
 
 
@@ -31,7 +32,7 @@ public class DatasourceAspect {
     public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
 
 
-        this.changeDbType(joinPoint);
+        this.changeDbType(joinPoint);//切换数据源
 
             return joinPoint.proceed();
 
@@ -46,7 +47,9 @@ public class DatasourceAspect {
 
         Method method = methodSignature.getMethod();
 
-        Datasource datasource = method.getAnnotation(Datasource.class);
+
+
+        Datasource datasource = method.getAnnotation(Datasource.class);//方法上获取注解
 
         if (datasource!=null){
             DatasourceTypeManager.setDatasource(datasource.type());
