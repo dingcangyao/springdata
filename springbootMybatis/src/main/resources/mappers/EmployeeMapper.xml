@@ -2,13 +2,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yaoge.springbootMybatis.dao.PeopleMapper">
+<mapper namespace="com.yaoge.springbootMybatis.dao.EmployeeMapper">
     <!--int insertUser();-->
 
-    <select id="selectPeoples" resultType="people">
-        select * from people
-    </select>
-    <insert id="insertPeople" >
-        insert into people values(null,'dss',23)
+    <resultMap id="BaseResultMap" type="com.yaoge.springbootMybatis.pojo.Employee">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <!-- 设置为自定义的类型转换器 -->
+
+        <result column="role" property="role" typeHandler="com.yaoge.springbootMybatis.typehandler.RoleTypeHandler"/>
+<!--        <result column="role" property="role" typeHandler="OTHERr"/> 这种也行-->
+    </resultMap>
+    <insert id="insert">
+        INSERT INTO employee (name, role)
+        VALUES
+        (#{employee.name},
+        <!-- 设置为自定义的类型转换器 -->
+        #{employee.role,jdbcType=VARCHAR,typeHandler=com.yaoge.springbootMybatis.typehandler.RoleTypeHandler})
     </insert>
+
+    <select id="getById" resultMap="BaseResultMap">
+        SELECT * FROM employee WHERE id = #{id}
+    </select>
 </mapper>
